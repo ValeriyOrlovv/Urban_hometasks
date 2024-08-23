@@ -2,7 +2,7 @@ immutable_var = (1, 2, 'a', 'b')
 print(immutable_var)
 
 # immutable_var[0] = 48:
-# Упадёт исклюбчение,
+# Упадёт исключение,
 # поскольку в кортеже содержаться неизменяемые типы данных
 
 mutable_list = [1, 2, 'a', 'b', 'Modified']
