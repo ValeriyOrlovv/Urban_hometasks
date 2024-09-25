@@ -1,18 +1,20 @@
 calls = 0
 
-def count_call(calls=calls) -> int:
+def count_calls() -> int:
     """Подсчитывает значение переменной calls."""
+    global calls
     calls += 1  
 
 
 def string_info(string: str) -> tuple:
-    count_call()
+    count_calls()
     return (len(string), string.upper(), string.lower())
 
 
 def is_contains(string: str, list_to_search: list) -> bool:
-    count_call()
-    if string in list_to_search:
+    count_calls()
+    unified_list = [line.lower() for line in list_to_search]
+    if string.lower() in unified_list:
         return True
     return False
 
