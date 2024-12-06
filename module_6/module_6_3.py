@@ -1,40 +1,75 @@
-class Horse:
-    """"Лошадь."""
-    x_distance = 0
-    sound = 'Frrr'
-
-    def run(self, dx):
-        self.x_distance += dx
+from random import randint
 
 
-class Eagle:
-    """Орёл."""
-    y_distance = 0
-    sound = 'I train, eat, sleep, and repeat'
+class Animal:
+    live = True
+    sound = True
+    _DEGREE_OF_DANGER = 0
 
-    def fly(self, dy):
-        self.y_distance += dy
+    def __init__(self, speed, _coords=[0, 0, 0]):
+        self._cords = _coords
+        self.speed = speed
+
+    def move(self, dx, dy, dz):
+        initial_z_coord = self._coords[2]
+        self._coords[0] += dx
+        self._coords[1] += dy
+        self._coords[2] += dz
+        if self._cords[2] < 0:
+            self._cords[2] = initial_z_coord
+            print("It's too deep, I can't dive")
 
 
-class Pegasus(Eagle, Horse):
-    """Пегас, наследуется от орла и лошади."""
-    def get_pos(self):
-        return (self.x_distance, self.y_distance)
+    def get_coords(self):
+        print(f'X:{self._coords[0]}, Y:{self._coords[1]}, Z:{self._coords[2]}')
 
-    def move(self, dx, dy):
-        super().run(dx)
-        super().fly(dy)
+    def attack(self):
+        if self._DEGREE_OF_DANGER < 5:
+            print("Sory, I'm peaceful :)")
+        else:
+            print("Be careful I'm attacking you 0_0")
 
-    def voice(self):
+class Bird(Animal):
+    beak = True
+
+    def lay_eggs(self):
+        eggs_to_give = randint(1, 4)
+        if eggs_to_give > 1:
+            print ('Here are {eggs_to_give} eggs for you')
+        else:
+            print ('Here is {eggs_to_give} egg for you')
+
+
+class AquaticAnimal(Animal):
+    _DEGREE_OF_DANGER = 3
+
+    def dive_in(self, dz):
+        diving_speed = self.speed / 2
+        self._cords[2] -= abs(dz)
+
+
+class PoisonousAnimal(Animal):
+    _DEGREE_OF_DANGER = 8
+
+
+class Duckbill(Bird):
+    sound = 'Click-click-click'
+
+    def speak(self):
         print(self.sound)
 
 
-p1 = Pegasus()
+db = Duckbill(10)
 
-print(p1.get_pos())
-p1.move(10, 15)
-print(p1.get_pos())
-p1.move(-5, 20)
-print(p1.get_pos())
+print(db.live)
+print(db.beak)
 
-p1.voice()
+db.speak()
+# db.attack()
+
+# db.move(1, 2, 3)
+# db.get_cords()
+# db.dive_in(6)
+# db.get_cords()
+
+# db.lay_eggs()

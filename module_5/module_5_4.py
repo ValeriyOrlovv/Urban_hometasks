@@ -5,6 +5,7 @@ class House:
     def __new__(cls, *args, **kwargs):
         if args[0] not in cls.houses_history:
             cls.houses_history.append(args[0])
+        return object.__new__(cls)
 
     def __init__(self, name, number_of_floors):
         self.name = name
@@ -18,7 +19,10 @@ class House:
                 print(i)
 
     def __eq__(self, other):
-        return self.number_of_floors == other.number_of_floors
+        if isinstance(other, House):
+            return self.number_of_floors == other.number_of_floors
+        elif isinstance(other, int):
+            self.number_of_floors == other
     
     def __lt__(self, other):
         return self.number_of_floors < other.number_of_floors
