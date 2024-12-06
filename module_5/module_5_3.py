@@ -37,7 +37,7 @@ h1 = h1 + 10 # __add__
 print(h1)
 print(h1 == h2)
 
-h1 += 10 # __iadd__
+h1 += 10 # __add__
 print(h1)
 
 h2 = 10 + h2 # __radd__
