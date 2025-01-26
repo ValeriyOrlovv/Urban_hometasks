@@ -1,59 +1,59 @@
 from random import randint
+from re import L
 
 
 class Animal:
     live = True
-    sound = True
+    sound = None
     _DEGREE_OF_DANGER = 0
 
-    def __init__(self, speed, _coords=[0, 0, 0]):
-        self._cords = _coords
+    def __init__(self, speed, _cords=[0, 0, 0]):
+        self._cords = _cords
         self.speed = speed
 
     def move(self, dx, dy, dz):
-        initial_z_coord = self._coords[2]
-        self._coords[0] += dx
-        self._coords[1] += dy
-        self._coords[2] += dz
+        initial_dz = self._cords[2]
+        self._cords[0] += dx * self.speed
+        self._cords[1] += dy * self.speed
+        self._cords[2] += dz * self.speed
         if self._cords[2] < 0:
-            self._cords[2] = initial_z_coord
-            print("It's too deep, I can't dive")
+            self._cords[2] = initial_dz
+            print("It's too deep, i can't dive :(")
 
-
-    def get_coords(self):
-        print(f'X:{self._coords[0]}, Y:{self._coords[1]}, Z:{self._coords[2]}')
+    def get_cords(self):
+        print(f'X: {self._cords[0]}, Y: {self._cords[1]}, Z: {self._cords[2]}')
 
     def attack(self):
         if self._DEGREE_OF_DANGER < 5:
-            print("Sory, I'm peaceful :)")
-        else:
-            print("Be careful I'm attacking you 0_0")
+            print("Sorry, i'm peaceful :)")
+        elif self._DEGREE_OF_DANGER >= 5:
+            print("Be careful, i'm attacking you 0_0")
+
 
 class Bird(Animal):
     beak = True
 
     def lay_eggs(self):
-        eggs_to_give = randint(1, 4)
-        if eggs_to_give > 1:
-            print ('Here are {eggs_to_give} eggs for you')
+        eggs = randint(1, 4)
+        if eggs > 1:
+            print(f'Here are {eggs} eggs for you')
         else:
-            print ('Here is {eggs_to_give} egg for you')
+            print(f'Here is {eggs} eggs for you')
 
 
 class AquaticAnimal(Animal):
     _DEGREE_OF_DANGER = 3
 
     def dive_in(self, dz):
-        diving_speed = self.speed / 2
-        self._cords[2] -= abs(dz)
+        self._cords[2] -= abs(dz) * (self.speed // 2)
 
 
 class PoisonousAnimal(Animal):
     _DEGREE_OF_DANGER = 8
 
 
-class Duckbill(Bird):
-    sound = 'Click-click-click'
+class Duckbill(Bird, PoisonousAnimal, AquaticAnimal):
+    sound = "Click-click-click"
 
     def speak(self):
         print(self.sound)
@@ -65,11 +65,11 @@ print(db.live)
 print(db.beak)
 
 db.speak()
-# db.attack()
+db.attack()
 
-# db.move(1, 2, 3)
-# db.get_cords()
-# db.dive_in(6)
-# db.get_cords()
+db.move(1, 2, 3)
+db.get_cords()
+db.dive_in(6)
+db.get_cords()
 
-# db.lay_eggs()
+db.lay_eggs()
